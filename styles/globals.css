@@ -115,12 +115,12 @@ body {
 
 .iframe-container {
   position: absolute;
-  top: 50%;
+  bottom: 0%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0%);
   width: 60%;
   /* Adjust width as needed */
-  height: 600px;
+  height: 64%;
   /* Adjust height as needed */
   overflow: visible;
   /* Hide overflow to prevent scrollbars */

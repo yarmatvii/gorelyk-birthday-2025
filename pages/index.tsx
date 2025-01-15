@@ -70,8 +70,7 @@ export default function Home() {
                 width: "100%",
                 height: "100%",
                 border: "none",
-                display: "block",
-                overflow: "visible",
+                display: "block"
               }}
             />
           </div>
