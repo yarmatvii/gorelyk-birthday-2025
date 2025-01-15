@@ -71,7 +71,7 @@ export default function Home() {
                 height: "100%",
                 border: "none",
                 display: "block",
-                overflow: "hidden",
+                overflow: "visible",
               }}
             />
           </div>
