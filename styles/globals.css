@@ -115,18 +115,16 @@ body {
 
 .iframe-container {
   position: absolute;
-  bottom: 0%;
+  bottom: 2%;
+  /* 2% indent from bottom */
   left: 50%;
-  transform: translate(-50%, 0%);
+  transform: translateX(-50%);
   width: 60%;
   /* Adjust width as needed */
   height: 64%;
   /* Adjust height as needed */
-  overflow: visible;
-  /* Hide overflow to prevent scrollbars */
+  overflow: hidden;
   z-index: 10;
-  /* Ensure it sits above the carousel content */
-  border-radius: 8px;
 }
 
 .nav-button {
