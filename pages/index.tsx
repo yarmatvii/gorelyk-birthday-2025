@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
 
 export default function Home() {
   const [currentImage, setCurrentImage] = useState<number>(0);
   const [isHovering, setIsHovering] = useState<boolean>(false);
+  const [iframeVisible, setIframeVisible] = useState<boolean>(true);
 
   const images: string[] = [
     "/images/photo1.jpg",
@@ -37,12 +38,14 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // Handle the blur effect removal after the button is clicked
     if (audioPlaying) {
-      // Remove the blur effect from the content once audio starts
       document.querySelector('.blur-container')?.classList.add('no-blur');
     }
   }, [audioPlaying]);
+
+  const toggleIframe = () => {
+    setIframeVisible(!iframeVisible);
+  };
 
   return (
     <div>
@@ -63,7 +66,9 @@ export default function Home() {
             <span>Happy Birthday!</span>
           </h1>
 
-          <div className="iframe-container">
+          <div
+            className={`iframe-container ${iframeVisible ? 'visible' : 'hidden'}`}
+          >
             <iframe
               src="https://embed.ipfscdn.io/ipfs/bafybeicd3qfzelz4su7ng6n523virdsgobrc5pcbarhwqv3dj3drh645pi/?contract=0x63F06373039408D66Ead3b19660e0722a760EE87&chain=%7B%22name%22%3A%22Polygon+Mainnet%22%2C%22chain%22%3A%22Polygon%22%2C%22rpc%22%3A%5B%22https%3A%2F%2F137.rpc.thirdweb.com%2F%24%7BTHIRDWEB_API_KEY%7D%22%5D%2C%22nativeCurrency%22%3A%7B%22name%22%3A%22POL%22%2C%22symbol%22%3A%22POL%22%2C%22decimals%22%3A18%7D%2C%22shortName%22%3A%22matic%22%2C%22chainId%22%3A137%2C%22testnet%22%3Afalse%2C%22slug%22%3A%22polygon%22%2C%22icon%22%3A%7B%22url%22%3A%22ipfs%3A%2F%2FQmd58rKLnBfteouAcmdjQ1HzDvRLSLjMbHjuXRytsKwAkD%22%2C%22width%22%3A360%2C%22height%22%3A360%2C%22format%22%3A%22svg%22%7D%7D&clientId=0c5afd5a76b87e8db64c94c392d149ae&theme=dark&primaryColor=purple"
               style={{
@@ -95,16 +100,18 @@ export default function Home() {
           >
             <ChevronRight />
           </button>
+
+          <button onClick={toggleIframe} className="iframe-toggle-button">
+            {iframeVisible ? <ChevronDown /> : <ChevronUp />}
+          </button>
         </div>
       </div>
 
-      {/* Audio Element */}
       <audio loop>
         <source src="/audio/song.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
 
-      {/* Button to start music */}
       <button
         className={`musicButton ${audioPlaying ? 'audioPlaying' : ''}`}
         onClick={handlePlayAudio}
