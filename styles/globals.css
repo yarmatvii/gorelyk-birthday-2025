@@ -133,8 +133,7 @@ body {
     /* More width for smaller screens */
     height: 40% !important;
     max-height: 40% !important;
-    bottom: 0%;
-    top: 60%;
+    top: 54%;
     /* Slightly closer to the bottom */
     /* 2% indent from bottom */
     left: 50%;
