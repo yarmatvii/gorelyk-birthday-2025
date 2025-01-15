@@ -11,6 +11,8 @@ export default function Home() {
     "/images/photo1.jpg",
     "/images/photo2.jpg",
     "/images/photo3.jpg",
+    "/images/photo4.jpg",
+    "/images/photo5.jpg",
   ];
 
   const nextSlide = (): void => {
@@ -22,7 +24,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const timer = setInterval(nextSlide, 5000);
+    const timer = setInterval(nextSlide, 10000);
     return () => clearInterval(timer);
   }, []);
 
@@ -69,10 +71,8 @@ export default function Home() {
                 height: "100%",
                 border: "none",
                 display: "block",
-                overflow: "hidden",
+                overflow: "visible",
               }}
-              frameBorder="0"
-              scrolling="no"
             />
           </div>
 
