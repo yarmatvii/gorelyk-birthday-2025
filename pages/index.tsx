@@ -1,12 +1,13 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Music } from "lucide-react";
 
 export default function Home() {
   const [currentImage, setCurrentImage] = useState<number>(0);
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const [iframeVisible, setIframeVisible] = useState<boolean>(true);
+  const [audioPlaying, setAudioPlaying] = useState(false);
+  const [currentTrack, setCurrentTrack] = useState<number>(0);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const images: string[] = [
     "/images/photo1.jpg",
@@ -14,6 +15,25 @@ export default function Home() {
     "/images/photo3.jpg",
     "/images/photo4.jpg",
     "/images/photo5.jpg",
+    "/images/photo6.jpg",
+    "/images/photo7.jpg",
+    "/images/photo8.jpg",
+    "/images/photo9.jpg",
+    "/images/photo10.jpg",
+    "/images/photo11.jpg",
+    "/images/photo12.jpg",
+  ];
+
+  const audioTracks: string[] = [
+    "/audio/song.mp3",
+    "/audio/song2.mp3",
+    "/audio/song3.mp3",
+    "/audio/song4.mp3",
+    "/audio/song5.mp3",
+    "/audio/song6.mp3",
+    "/audio/song7.mp3",
+    "/audio/song8.mp3",
+    "/audio/song9.mp3",
   ];
 
   const nextSlide = (): void => {
@@ -25,17 +45,35 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const timer = setInterval(nextSlide, 10000);
+    const timer = setInterval(nextSlide, 3200);
     return () => clearInterval(timer);
   }, []);
 
-  const [audioPlaying, setAudioPlaying] = useState(false);
-
   const handlePlayAudio = () => {
     setAudioPlaying(true);
-    const audio = document.querySelector('audio') as HTMLAudioElement;
-    audio.play();
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
   };
+
+  const switchMusic = () => {
+    setCurrentTrack((prev) => (prev + 1) % audioTracks.length);
+  };
+
+  // Handle track changes
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.load(); // Force reload the audio with new source
+      if (audioPlaying) {
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log("Audio play failed:", error);
+          });
+        }
+      }
+    }
+  }, [currentTrack]);
 
   useEffect(() => {
     if (audioPlaying) {
@@ -59,8 +97,6 @@ export default function Home() {
               <img src={img} alt={`Birthday photo ${index + 1}`} />
             </div>
           ))}
-
-          <div className="overlay" />
 
           <h1 className="title">
             <span>Happy Birthday!</span>
@@ -104,11 +140,16 @@ export default function Home() {
           <button onClick={toggleIframe} className="iframe-toggle-button">
             {iframeVisible ? <ChevronDown /> : <ChevronUp />}
           </button>
+
+          <button onClick={switchMusic} className="music-toggle-button">
+            <Music size={18} />
+            <span>switch cringe {currentTrack + 1}/9</span>
+          </button>
         </div>
       </div>
 
-      <audio loop>
-        <source src="/audio/song.mp3" type="audio/mpeg" />
+      <audio ref={audioRef} loop>
+        <source src={audioTracks[currentTrack]} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
 
@@ -116,7 +157,19 @@ export default function Home() {
         className={`musicButton ${audioPlaying ? 'audioPlaying' : ''}`}
         onClick={handlePlayAudio}
       >
-        <span>с др<br /><br /><br /><br /><br /><br /><br /><br /><label>(клац-клац)</label></span>
+        <span>
+          tl;dr : <b>С ДР</b>
+          <br /><br />
+          <label className="birthdayGreetingsLabel">Андрей, 8 лет с тобой — это подвиг, достойный занесения в скрижали нашей истории.
+            Мы решили, что такая важная дата не может пройти без пафоса и, конечно, этой открытки. Это, конечно, что-то вроде тех фотографий, которые делают, чтобы люди почувствовали себя важными.
+            С Днем Рождения! 🎉
+            Мы даже создали для тебя NFT — пиксельное чудо, которое ты можешь гордо носить в своем виртуальном кармане.
+            Желаем счастья, успехов, нескончаемых поводов для праздников и, конечно, терпения (особенно терпения к нам, ведь ты нас знаешь). Ты для нас как коллекционная монета — уникален, ценный и немного старомодный.</label>
+          <br /><br /><br /><br /><br /><br /><br />
+          <label className="reccomendationLabel">-better view on PC-</label>
+          <br />
+          <label className="callToArmsLabel">(клац-клац)</label>
+        </span>
       </button>
     </div>
   );
