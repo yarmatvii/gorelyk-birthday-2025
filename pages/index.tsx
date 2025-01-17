@@ -32,8 +32,6 @@ export default function Home() {
     "/audio/song5.mp3",
     "/audio/song6.mp3",
     "/audio/song7.mp3",
-    "/audio/song8.mp3",
-    "/audio/song9.mp3",
   ];
 
   const nextSlide = (): void => {
@@ -143,7 +141,7 @@ export default function Home() {
 
           <button onClick={switchMusic} className="music-toggle-button">
             <Music size={18} />
-            <span>switch cringe {currentTrack + 1}/9</span>
+            <span>switch cringe {currentTrack + 1}/7</span>
           </button>
         </div>
       </div>
